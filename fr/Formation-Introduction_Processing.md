@@ -10,17 +10,30 @@ Processing peut donc être utilisé dans tout domaines des arts visuelles tels q
 
 ### Installation
 
-<img src="../src/assets/img/installation01.png" alt="inst01" width="800" height="400"/>
+![installation01](../src/assets/img/installation01.png)
 
 Rendez-vous sur [le site officiel de Processing](https://processing.org), descendez vers la section "Getting started", dans la catégorie "Get the software" vous retrouvez un bouton "Download Processing". Cliquer sur le bouton, vous serez redirigé vers la page de téléchargement, vous avez plus qu'a choisir la version du logiciel Processing (peut importe laquelle) qui correspond à votre système d'opération (OS) c'est-à-dire Windows, MacOS ou Linux.
 
+
+![installation02](../src/assets/img/installation02.png)
+
+Section "Getting started"
+
+
+![installation03](../src/assets/img/installation03.png)
+
+Catégorie "Get the software" avec le bouton "Download Processing"
+
+
+![installation04](../src/assets/img/installation04.png)
+Page de téléchargement
 
 
 ## Variables
 
 ## Types
 
-## Opérateurs Logiques
+## Opérateurs logiques
 
 ## Instructions conditionnelles
 
