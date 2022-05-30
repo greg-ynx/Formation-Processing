@@ -82,11 +82,36 @@ println("Hello World!");
 
 ## Structure d'un sketch Processing
 
-On retrouve dans chaque sketch deux fonctions fondamentales nommées ```Setup()``` et ```Draw()``` que nous étudier:
+On retrouve dans chaque sketch deux fonctions fondamentales nommées ```setup()``` et ```draw()``` que nous allons étudier:
 
-### Setup()
+### setup()
 
-### Draw()
+```setup()``` est une fonction qui s'exécute qu'une seule fois lors du début du programme. Elle est codée de la manière suivante :
+
+```java
+void setup() {
+	// Instructions
+}
+```
+
+Le mot-clé "void" est le type de l'élément de retour de cette fonction, ici, la fonction setup() ne renvoie rien, c'est pourquoi sont type de retour est dit "vide".
+
+### draw()
+
+```draw()``` est une fonction qui s'exécute en boucle en lisant les instructions de haut en bas tant que l'exécution du sketch n'est pas arrêté.
+Elle est codée de la manière suivante :
+
+```java
+void draw() {
+	// Instructions
+}
+```
+
+La fonction ```draw()``` est de type "void" comme la fonction ```setup()```.
+
+Voyons ce que ça donne à l'exécution :
+
+![setup_draw_exemple](../src/assets/gif/setupdraw_exemple.gif)
 
 ## Variables
 
