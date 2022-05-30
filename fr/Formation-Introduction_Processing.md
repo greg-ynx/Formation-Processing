@@ -29,6 +29,65 @@ Catégorie "Get the software" avec le bouton "Download Processing"
 Page de téléchargement
 
 
+Suite au téléchargement, vous obtiendrez un document .zip qu'il faudra décompresser dans le dossier de votre choix : 
+
+![installation05](../src/assets/img/installation05.png)
+
+
+Vous pouvez maintenant acceder à l'application Processing:
+
+![installation06](../src/assets/img/installation06.png)
+
+
+### Présentation de l'IDE Processing
+
+Un Environnement de Développement Intégré (IDE) est le logiciel qui vous premettra de "coder" des applications, en effet, ces logiciels vous permettent d'écrire dans les différents langages de programmation (que nous appelerons PL pour "Programming Language") supportés.
+
+L'IDE Processing supporte de base les langages Java et Python. Ici, nous utiliserons Java pour le reste du cours.
+
+Voici la page d'acceuil : 
+
+![ide01](../src/assets/img/ide01.png)
+
+Les fichiers/programmes sont appelés "sketch" contenant le code écrit pour votre programme.
+
+
+![ide02](../src/assets/img/ide02.png)
+
+1. Menu
+2. Bouton "Run" : Execute le sketch
+3. Bouton "Stop" : Arrête l'exécution du sketch
+4. Bouton debugage
+5. Menu défilant des options (choix des PL)
+6. Barre d'onglets
+7. Sketch
+8. Console et console d'erreurs
+
+
+### Hello world
+
+Nous allons écrire notre premier programme ! Ce dernier devra renvoyer la phrase "Hello World!" dans la console : 
+
+Pour cela, il existe une fonction (Nous définirons ce terme plus tard) qui affiche du contenu dans la console. Nous parlons de la fonction ```println()```.
+
+Ecrivez la ligne suivante dans le sketch :
+
+```java
+println("Hello World!");
+```
+
+
+![hello_world](../src/assets/img/hello_world.png)
+
+
+## Structure d'un sketch Processing
+
+On retrouve dans chaque sketch deux fonctions fondamentales nommées ```Setup()``` et ```Draw()``` que nous étudier:
+
+### Setup()
+
+### Draw()
+
 ## Variables
 
 ## Types
