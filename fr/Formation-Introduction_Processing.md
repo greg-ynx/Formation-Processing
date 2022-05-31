@@ -326,7 +326,24 @@ Les opérateurs sont des fonctions sous forme de symboles qui permettent des cal
 
 ### Opérateurs relationnels
 
+| Opérateur                | Symbole | Description                                                              | Exemples                                  |
+|:-------------------------|:-------:|:-------------------------------------------------------------------------|:------------------------------------------|
+| Less than                | `<`     | Teste si la valeur de gauche est inférieur à la valeur de droite         | `3 < 5` -> `true`; `3 < 1` -> `false`     |
+| Greater than             | `>`     | Teste si la valeur de gauche est supérieur à la valeur de droite         | `5 > 3` -> `true` ; `5 > 6` -> `false`    |
+| Equality                 | `==`    | Détermine si deux valeurs sont equivalentes                              | `1 == 1` -> `true` ; `1 == 2` -> `false`  |
+| Inequality               | `!=`    | Détermine si deux valeurs ne sont pas équivalentes                       | `1 != 1` -> `false` ; `1 != 2` -> `true`  |
+| Less than or equal to    | `<=`    | Teste si la valeur de gauche est inférieur ou égal à la valeur de droite | `3 <= 5` -> `true` ; `3 <= 3` -> `true`   |
+| Greater than or equal to | `>=`    | Teste si la valeur de gauche est supérieur ou égal à la valeur de droite | `5 >= 3` -> `true` ; `5 >= 5` -> `true`   |
+
+
 ### Opérateurs logiques
+
+| Opérateur   | Symbole | Description                                                                                      | Exemple             |
+|:------------|:-------:|:-------------------------------------------------------------------------------------------------|:--------------------|
+| Logical AND | `&&`    | Compare deux expressions et retourne `true` si et uniquement si les deux expressions sont `true` |                     |
+| Logical OR  | `\|\|`  | Compare deux expressions et retourne `true` si une des expressions est `true`                    |                     |
+| Logical NOT | `!`     | Inverse la valeur booléenne d'une expression                                                     | `!true` -> `false`  | 
+
 
 ## Instructions conditionnelles
 
