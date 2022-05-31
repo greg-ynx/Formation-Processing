@@ -285,7 +285,25 @@ Quel est le code hexadecimal de la couleur noire ?
 	R : <code>#000000</code>
 </details>
 
-## Opérateurs logiques
+
+## Opérateurs
+
+Les opérateurs sont des fonctions sous forme de symboles qui permettent des calculs et de relations entre valeurs.
+
+### Opérateurs mathématiques
+
+#### Opérateurs mathématiques principaux
+
+| Opérateur | Symbole | Exemple    |
+|:----------|:-------:|:-----------|
+| Addition  | +       | 5+5 -> 100 |
+
+
+### Opérateurs au niveau du bit
+
+### Opérateurs relationnels
+
+### Opérateurs logiques
 
 ## Instructions conditionnelles
 
@@ -294,3 +312,7 @@ Quel est le code hexadecimal de la couleur noire ?
 ## Fonctions
 
 ## Programmation Orientée Objets
+
+## Mini-projet : Le chat vous suit des yeux!
+
+## Projet final : Pong 
