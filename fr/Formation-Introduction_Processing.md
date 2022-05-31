@@ -294,12 +294,35 @@ Les opérateurs sont des fonctions sous forme de symboles qui permettent des cal
 
 #### Opérateurs mathématiques principaux
 
-| Opérateur | Symbole | Exemple    |
-|:----------|:-------:|:-----------|
-| Addition  | +       | 5+5 -> 100 |
+| Opérateur | Symbole | Description                      | Exemples                |
+|:----------|:-------:|:---------------------------------|:------------------------|
+| Addition  | `+`       | Calcul la somme                | `5+5` -> 10  		   |
+| Minus     | `-`       | Calcul la différence           | `5-5` -> 0   		   |
+| Multiply  | `*`       | Calcul le produit              | `5*5` -> 25  		   |
+| Divide    | `/`       | Calcul le quotient             | `5/5` -> 1   		   |
+| Modulo    | `%`       | Calcul le reste d'une division | `5%5` -> 0 ; `6%5` -> 1 |
+
+
+#### Opérateurs mathématiques combinés
+
+| Opérateur        | Symboles | Description                             | Exemples                 |
+|:-----------------|:--------:|:----------------------------------------|:-------------------------|
+| Add assign       | `+=`     | Combine l'addition à l'assignement      | `a += 5` <=> `a = a + 5` |
+| Substract assign | `-=`     | Combine la soustraction à l'assignement | `a -=5` <=> `a = a - 5`  |
+| Multiply assign  | `*=`     | Combine le produit à l'assignement      | `a *= 5` <=> `a = a * 5` |
+| Divide assign    | `/=`     | Combine le quotient à l'assignement     | `a /= 5` <=> `a = a / 5` |
+| Increment        | `++`     | Augmente la valeur d'un entier          | `a++` <=> `a = a + 1`    |
+| Decrement        | `--`     | Réduit la valeur d'un entier            | `a--` <=> `a = a - 1`    |
 
 
 ### Opérateurs au niveau du bit
+
+| Opérateur   | Symbole | Description                                          | Exemple             |
+|:------------|:-------:|:-----------------------------------------------------|:--------------------|
+| Bitwise AND | `&`     | Compare chaque bit correspondant avec l'opérateur ET | `110 & 011` -> 010  |
+| Bitwise OR  | `\|`    | Compare chaque bit correspondant avec l'opérateur OU | `110 \| 011` -> 101 |
+| Left shift  | `<<`    | Déplace la séquence de bits à gauche                 | `13 << 1` -> 26     |
+| Right shift | `>>`    | Déplace la séquence de bits à droite                 | `16 >> 3` -> 2      |
 
 ### Opérateurs relationnels
 
