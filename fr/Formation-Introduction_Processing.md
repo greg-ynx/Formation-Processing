@@ -335,7 +335,6 @@ Les opérateurs sont des fonctions sous forme de symboles qui permettent des cal
 | Less than or equal to    | `<=`    | Teste si la valeur de gauche est inférieur ou égal à la valeur de droite | `3 <= 5` -> `true` ; `3 <= 3` -> `true`   |
 | Greater than or equal to | `>=`    | Teste si la valeur de gauche est supérieur ou égal à la valeur de droite | `5 >= 3` -> `true` ; `5 >= 5` -> `true`   |
 
-
 ### Opérateurs logiques
 
 | Opérateur   | Symbole | Description                                                                                      | Exemple             |
@@ -344,6 +343,91 @@ Les opérateurs sont des fonctions sous forme de symboles qui permettent des cal
 | Logical OR  | `\|\|`  | Compare deux expressions et retourne `true` si une des expressions est `true`                    |                     |
 | Logical NOT | `!`     | Inverse la valeur booléenne d'une expression                                                     | `!true` -> `false`  | 
 
+### Exercice 3
+
+#### Question 3.1
+
+Créer deux variables "a" et "b" tel que :
+- a = 3
+- b = 8
+
+Afficher la valeur de a et b ainsi que la variable "c" représentant l'addition de ces deux variables.
+
+<details>
+	<summary>Réponse</summary>
+	R :
+	<pre>
+		<code>
+			int a = 3;
+			int b = 8;
+			int c = a + b;
+			println(a);
+			println(b);
+			println(c);
+		</code>
+	</pre>
+	Résultat :
+	<pre>
+		<code>		
+			3
+			8
+			11
+		</code>
+	</pre>
+</details> 
+
+#### Question 3.2
+
+Créer un sketch dans lequel vous déclarerez une variable nulle nommée "a" qui augmentera d'une unité jusqu'à que le sketch soit arrêté.
+
+<details>
+	<summary>Réponse</summary>
+	R :
+	<pre>
+		<code>
+			int a = 0;
+			void draw() {
+				a++;
+				println(a);
+			}
+		</code>
+	</pre>
+</details>
+
+#### Question 3.3
+
+Créer un sketch dans lequel vous déclarerez une variable nulle "a" qui augmentera d'une unité jusqu'à que le sketch soit arrêté. Créer une autre variable "x" ayant pour valeur 100 et afficher la valeur de la comparaison entre a et x si elles sont égales.
+
+Pour procéder à cette `condition`, nous allons utiliser une instruction nommée `if` :
+
+```java
+if expression {
+	println(expression);
+}
+```
+
+<details>
+	<summary>Réponse</summary>
+	R :
+	<pre>
+		<code>
+			int a = 0;
+			int x = 100;
+			void draw() {
+				a++
+				if (x == a) {
+					println(x == a);
+				}
+			}
+		</code>
+	</pre>
+	Résultat
+	<pre>
+		<code>
+			true
+		</code>
+	</pre>
+</details>
 
 ## Instructions conditionnelles
 
