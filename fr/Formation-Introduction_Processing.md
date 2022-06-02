@@ -401,7 +401,7 @@ Créer un sketch dans lequel vous déclarerez une variable nulle "a" qui augment
 Pour procéder à cette `condition`, nous allons utiliser une instruction nommée `if` :
 
 ```java
-if expression {
+if (expression) {
 	println(expression);
 }
 ```
@@ -430,6 +430,345 @@ if expression {
 </details>
 
 ## Instructions conditionnelles
+
+### if
+
+L'instruction `if` ("si" en français) permet au sketch de prendre une décision sur quel code exécuter en fonction du ou des exrpessions contenues dedans.
+
+```java
+if (expression) {
+	// Instructions
+}
+```
+
+Par exemple, si on reprend la question 3.3, le code affichant l'expression `x == a` est exécuté uniquement si la valeur de `x` est égale à la valeur attribuée à `a`.
+
+### else
+
+L'instruction `else` ("sinon" en français) permet au sketch de prendre une décision sur quel code à exécuter si la condition de l'instruction `if` associée retourne `false`.
+
+L'instruction `else` ne peut donc pas exister sans l'existance d'une instruction `if` en amont.
+
+```java
+if (expression) {
+	// Instructions
+}
+else {
+	// Instructions
+}
+```
+
+`else` n'utilise pas d'expression comme vous pouvez le voir sur la structure ci-dessus.
+
+Par exemple, dans la question 3.3, nous pouvons afficher la valeur de l'expression peu importe le résultat de ce dernier : 
+
+```java
+int a = 0;
+int x = 100;
+void draw() {
+	a++
+	if (x == a) {
+		println(x == a);
+	}
+	else {
+		println(x == a);
+	}
+}
+```
+
+Le problème avec cet algorithme c'est qu'il est inutile, en effet, on pourrait écrire un algorithme plus simple :
+
+```java
+int a = 0;
+int x = 100;
+void draw() {
+	a++
+	println(x == a);
+}
+```
+
+Ça tombe bien ! Nous allons modifier le problème de la question pour tirer profit de l'instruction `else`.
+
+Déclarez les  variables `a` et `x` comme dans la question 3.3, et incrémentez la valeur de `a` indéfiniment. SI la valeur de `a` est égale à la valeur de `x` alors afficher dans la console le message suivant :  Les deux variables sont égales. SINON afficher le message suivant : La variable 'a' n'est pas égale à x.
+
+<details>
+	<summary>Réponse</summary>
+	R :
+	<pre>
+		<code>
+			int a = 0;
+			int x = 100;
+			void draw() {
+				a++
+				if (x == a) {
+					println("Les deux variables sont égales");
+				}
+				else {
+					println("La variable 'a' n'est pas égale à x");
+				}
+			}
+		</code>
+	</pre>
+</details>
+
+### else if
+
+L'instruction `else if` ("sinon si" en français) permet au sketch de prendre une décision liée à une autre expression tout en prenant compte de la condition `if` associée.
+
+L'instruction `else if` peut donc être vu comme un deuxième `if` mais qui respecte les différentes conditions associées au plus proche `if` en amont.
+
+```java
+if (expression1) {
+	// Instructions
+}
+else if (expression2) {
+	// Instructions
+}
+```
+
+L'utilisation du `else if` ne necessite pas l'utilisation du `else` comme vous pouvez le voir ci-dessus.
+
+Reprennez le dernier algorithme et ajouter la condition si la variable `a` est supérieure à 3, afficher : a est supérieure à 3.
+
+<details>
+	<summary>Réponse</summary>
+	R :
+	<pre>
+		<code>
+			int a = 0;
+			int x = 100;
+			void draw() {
+				a++
+				if (x == a) {
+					println("Les deux variables sont égales");
+				}
+				else if (a > 3) {
+					println("a est supérieure à 3");
+				}
+				else {
+					println("La variable 'a' n'est pas égale à x");
+				}
+			}
+		</code>
+	</pre>
+</details>
+
+Comme vous pouvez le voir, l'instruction `else` a été ignorée. C'est à cause du fait que la condition `else if` est vraie, le code exécuter est donc celui de la condition validée.
+
+Pour pouvoir afficher les deux coditions valides, on utilise une autre instruction `if` comme suivant : 
+
+```java
+int a = 0;
+int x = 100;
+void draw() {
+	a++;
+	if (x == a) {
+		println("Les deux variables sont égales");
+	}
+	else {
+		println("La variable 'a' n'est pas égale à x");
+	}
+	if (a > 3) {
+		println("a est supérieure à 3");
+	}
+}
+```
+
+Affichage sur la console : 
+
+```
+La variable 'a' n'est pas égale à x
+...
+a est supérieure à 3
+La variable 'a' n'est pas égale à x
+...
+Les deux variables sont égales
+a est supérieure à 3
+...
+```
+
+ATTENTION : Les conditions qui sont vraies en même temps et qui doivent être exécutées en même temps sont celles qui doivent être séparée par une instruction `if`. Comme dans l'exemple ci-dessus, c'est l'ancien `else if` qui s'est transformé en `if`.
+
+### ?:
+
+L'instruction ou synthax `?:` est une abréviation du `if` et du `else` et se code comme suit :
+
+```java
+resultat = condition ? expression1 : expression2;
+```
+
+Il faudra utiliser une variable pour stocker la valeur de retour de l'opérateur `?:`, la condition est testée, si elle est `true`, alors `expression1` sera la valeur de `resultat`, sinon `expression2` sera la valeur de `resultat`.
+
+La synthax précédente correspond à cet algorithme : 
+
+```java
+if (condition) {
+	resultat = expression1;
+}
+else {
+	resultat = expression2;
+}
+```
+
+### switch
+
+`switch` est une instruction fonctionnant comme `if` et `else`, néanmoins, cette instruction est plus adaptée lorsque vous êtes confrontés à trois conditions ou plus.
+
+Elle s'écrit de la sorte :
+
+```java
+// val est une variable numérique
+switch(val) {
+	case 0:
+		// Instruction
+		break;
+	case 1:
+		// Instruction
+		break; 
+}
+```
+
+Traduction : Le `switch` prend en donnée d'entrée une variable dont il va lire la valeur et prendre une décision grâce à l'instruction `case` qui représente le "cas" de la variable d'entrée (ici, `val` peut être égale à 0 ou 1).
+
+L'instruction `break` consiste à quitter le block `switch`, en effet, une fois que la décision est prise et que le code choisi est exécuter, il est inutile de continuer à tourner dans le block.
+
+Il existe aussi une instruction nommé `default` qui va proposer un cas de valeur par défaut si aucun des `case` est validé.
+
+Exemple :
+
+```java
+int val = 4;
+switch(val) {
+	case 0:
+		println("Zéro");
+		break;
+	case 1:
+		println("Un");
+		break;
+	default:
+		println("Quatre");
+		break;
+}
+```
+
+Affichage sur la console : 
+
+```
+Quatre
+```
+
+### break
+
+Comme cité précédement, `break` est une instruction qui sert à sortir d'un block de code tel que le `switch` et les boucles `while` et `for` (Nous verrons les bloucles plus tard).
+
+### continue
+
+L'instruction `continue` sert à ignorer le reste de code à exécuter dans un block de code (plus précisément les boucles).
+
+Exemple :
+
+```java
+for (condition1) {
+	if (condition2) {
+		continue;
+	}
+	// Instructions
+}
+```
+
+Dans cet exemple, nous avons recours à une boucle `for` qui va itérer autant de fois que `condition1` le permet. On a ajouter une instruction conditionnelle `if` afin de prendre une décision à un moment dans le block de code. Si la condition est validée, alors, les instructions seront ignorées et le sketch passera à l'itération suivante. Sinon (`condition2` == `false`) les instructions seront exécutées.
+
+### Exercice 4
+
+#### Question 4.1
+
+Créer un sketch qui sera capable de prendre un entier non nul "x" et qui affichera si ce nombre est pair ou nous dans la console.
+
+Tester avec `x = 1` et `x = 2`
+
+<details>
+	<summary>Réponse</summary>
+	R :
+	<pre>
+		<code>
+			int x = 1;
+			if (x % 2 == 0) {
+				println("C'est un nombre pair");
+			}
+			else {
+				println("C'est un nombre impair");
+			}
+		</code>
+	</pre>
+</details>
+
+#### Question 4.2
+
+Reprennons le même problème, la variable "x" peut être un entier quelconque (même nul), cette fois-ci, le sketch devra afficher si le nombre est nul, pair ou impair. CONTRAINTE, vous devez utilser l'instruction `switch` dans le code (On vous aide, le `switch` devra verifier l'expression `x % 2`).
+
+Tester avec `x = 0`, `x = 1` et `x = 2`
+
+<details>
+	<summary>Réponse</summary>
+	R :
+	<pre>
+		<code>
+			int x = 0;
+			switch(x % 2) {
+			  case 0:
+			    if (x != 0) {
+			      println("C'est un nombre pair");
+			    }
+			    else {
+			      println("C'est un nombre nul");
+			    }
+			    break;
+			  default:
+			    println("C'est un nombre impair");
+			    break;
+			}
+		</code>
+	</pre>
+</details>
+
+#### Question 4.3
+
+On possède le code suivant :
+
+```java
+String[] liste = new String[3];
+liste[0] = "Bonjour";
+liste[1] = "Bonsoir";
+liste[2] = "Salut!";
+for (int i=0; i<=2; i++) {
+  println("Iteration" + i);
+  // Instruction conditionnelle
+  println("Prochaine itération" + (i+1)); 
+}
+```
+
+Trouver l'instruction conditionnelle qui permettra au sketch d'afficher pour quelle valeur de `i` l'élément de la liste est égale à `Bonsoir` et qui ignorera à partir de ce moment le reste de la boucle `for`.
+
+<details>
+	<summary>Réponse</summary>
+	R :
+	<pre>
+		<code>
+			String[] liste = new String[3];
+			liste[0] = "Bonjour";
+			liste[1] = "Bonsoir";
+			liste[2] = "Salut!";
+			for (int i=0; i<=2; i++) {
+			  println("Iteration" + i);
+			  if (liste[i] == "Bonsoir") {
+			    println(liste[i]);
+			    break;
+			  }
+			  println("Prochaine itération" + (i+1)); 
+			}
+		</code>
+	</pre>
+</details>
 
 ## Boucles
 
