@@ -772,9 +772,370 @@ Trouver l'instruction conditionnelle qui permettra au sketch d'afficher pour que
 
 ## Boucles
 
+### while
+
+`while` est une boucle d'itération ("Tant que" en français). Elle s'écrit de cette façon :
+
+```java
+while (condition) {
+	// Instruction
+}
+```
+
+Tant que la condition est vraie `true` le code à l'intérieur de la boucle `while` sera exécuté.
+
+On peut utiliser le mot-clé `break` pour sortir de cette boucle.
+
+### for
+
+`for` est une boucle d'itération ("Pour" en français). Elle s'écrit de cette façon :
+
+```java
+for (itérateur; condition; pas) {
+	// Instruction
+}
+```
+
+La boucle `for` utilise trois paramètres :
+
+- `itérateur` : Une variable à déclarer et initialiser à une valeur itérable.
+- `condition` : Une condition quelconque, souvent utilisant l'`itérateur` et un opérateur de comparaison.
+- `pas` : Le pas que vous voulez donner à l'`itérateur` à chaque itération de la boucle, généralement on place `itérateur++` afin d'incrémenter un entier à chaque itération.
+
+Exemple :
+
+```java
+// Boucle for
+for (int i = 0; i < 10; i++) {
+	println(i); // Affiche la valeur de i
+}
+```
+
+Ce sketch va afficher la valeur de l'itérateur `i` à chaque itération. Testez le et vous verrez que les valeurs de 0 à 9 seront affichées.
+
+### Exercice 5
+
+#### Question 5.1
+
+On vous donne la liste d'entier `liste` et deux variables `maxi` et `mini`.
+
+Créer deux sketchs, un utilisant la boucle `for` et l'autre utilisant la boucle `while`, ces sketchs doivent pouvoir lire chaque valeur de `liste` et trouver l'entier le plus petit et le plus grand de la liste d'entiers. Vous devrez ensuite afficher les valeurs de `liste`, `mini` et `maxi`.
+
+```java
+int mini = 0;
+int maxi = 0;
+int[] liste = new int[10];
+for (int a = 0; a < 10; a++) {
+  liste[a] = int(random(100));
+}
+
+// Ecrivez votre réponse ici
+```
+
+<details>
+	<summary>Réponse for</summary>
+	R1 (for) :
+	<pre>
+		<code>
+			int mini = 0;
+			int maxi = 0;
+			int[] liste = new int[10];
+			for (int a = 0; a < 10; a++) {
+			  liste[a] = int(random(100));
+			}
+			for (int i = 0; i < liste.length ; i++) {
+			  if (i == 0) {
+			    mini = liste[i];
+			    maxi = liste[i];
+			    continue;
+			  }
+			  if (maxi < liste[i]) {
+			    maxi = liste[i];
+			  }
+			  if (mini > liste[i]) {
+			    mini = liste[i];
+			  }
+			}
+			println(liste);
+			println(mini);
+			println(maxi);
+		</code>
+	</pre>
+</details>
+
+<details>
+	<summary>Réponse while</summary>
+	R2 (while) :
+	<pre>
+		<code>
+			int mini = 0;
+			int maxi = 0;
+			int[] liste = new int[10];
+			for (int a = 0; a < 10; a++) {
+			  liste[a] = int(random(100));
+			}
+			int i = 0;
+			mini = liste[i];
+			maxi = liste[i];
+			while (i < liste.length) {
+			  if (maxi < liste[i]) {
+			          maxi = liste[i];
+			  }
+			  if (mini > liste[i]) {
+			    mini = liste[i];
+			  }
+			  i++;
+			}
+			println(liste);
+			println(mini);
+			println(maxi);
+		</code>
+	</pre>
+</details>
+
+
 ## Fonctions
 
+Les fonctions sont des sous-programme permettant d'effectuer des opérations répétitives. Au lieu d'écrire un code complet où des instructuions se répètent de manière similaire. Nous pouvons créer une fonction et appeler celle-ci afin d'exécuter la partie de code répétitive. Les fonctions permettent de simplifier l'écriture et la lecture de code, elles permettent aussi de faciliter l'optimisation de notre programme.
+
+Sur Processing, une fonction s'écrit de la sorte :
+
+```java
+returnType name(arguments) {
+	// Instructions -> sous programme
+}
+```
+
+- `returnType` correspond au type de retour de la fonction
+- `name` est le nom attribuer à la fonction, attention, les mots-clés liés au langage de programmation ne doivent pas être utilisé comme nom de fonction !
+- `arguments` ce sont les arguments/paramètres extérieurs à la fonction, une fonction ne requiert pas forcément d'argument. Dans une fonction, les arguments sont forcément contenu entre des parenthèses `()` collées au nom de la fonction.
+- `{}` les accollades représentent les blocks ou scope de code dans lesquelles se trouve le "sous-programme".
+
+### Fonctions intégrées
+
+Les fonctions intégrées dans Processing sont des fonctions pré-faites, nous avons déjà vu les fonctions `setup()` et `draw()`. Vous pouvez retrouver les fonctions intégrées à Processing [ici](https://processing.org/reference/).
+
+Nous allons voir quelques autres fonctions utiles dans Processing pour le dessin.
+
+#### size()
+
+Vous avez déjà pu voir une petite fenêtre vide apparaitre à chaque exécution de sketch durant ce cours. C'est la fenêtre de dessin. En effet, Processing est utiliser à des fins d'art visuel.
+
+La fonction `size()` sert à définir la taille de cette fenêtre de dessin.
+
+Rentrez le code suivant :
+
+```java
+size(640, 360);
+```
+
+Comparaison des résultats : 
+
+- De base :
+
+![size01](../src/assets/img/size01.png)
+
+- Avec `size(640,360)` :
+
+![size02](../src/assets/img/size02.png)
+
+#### line()
+
+La fonction `line()` dessine une ligne dans la fenêtre de dessin, cette ligne représente un segment et s'écrit :
+
+```java
+line(x1, y1, x2, y2);
+```
+
+Avec `x1` la position en abscisse (horizontal) du premier point, `y1` la position en ordonné (vertical) du premier point.
+
+`x2` la position en abscisse du deuxième point et `y2` la position en ordonné du deuxième point.
+
+Ces quatre arguments sont des `float` mais les `int` sont aussi acceptés.
+
+À la suite du code précédent, ajouter ce code :
+
+```java
+line(120, 80, 340, 300);
+```
+
+Résultat : 
+
+![line01](../src/assets/img/line01.png)
+
+#### Autres fonctions 2D
+
+La fonction `line()` fait partie des `2D Primitives`, dans cette liste de fonction, on compte :
+
+- `point()` : Dessine un point (1 pixel)
+- `line()` : Dessine une ligne entre deux points
+- `arc()` : Dessine un arc de cercle
+- `circle()` : Dessine un cercle
+- `ellipse()` : Dessine une ellipse (forme ovale)
+- `triangle()` : Dessine un triangle
+- `quad()` : Dessine un quadrilatère
+- `rect()` : Dessine un rectangle
+- `square()` : Dessine un carré
+
+#### Gestion des couleurs
+
+- `background()` : Applique une couleur au fond d'écran
+- `fill()` : Définie la couleur de remplissage des formes
+- `stroke()` : Définie la couleur pour les `line()` et les contours des formes
+
+Exemple :
+
+```java
+size(640, 360);
+stroke(255, 0, 0);
+line(120, 80, 340, 300);
+fill(0, 0, 255);
+square(300, 100, 220);
+```
+
+Résultat : 
+
+![color_handling](../src/assets/img/colorhandling01.png)
+
+#### text()
+
+La fonction `text()` permet d'afficher un texte dans l'écran de dessin et s'écrit : 
+
+```java
+text(texte, x, y);
+```
+
+- `texte` : Le texte à afficher
+- `x` : La position du texte en abscisse
+- `y` : La position du texte en ordonné
+
+Exemple :
+
+```java
+size(640, 360);
+text("Hello World!", 300, 180);
+```
+
+Résultat : 
+
+![text01](../src/assets/img/text01.png)
+
+### Exercice 6
+
+Tout d'abord, établissez une fenêtre de taille 640x360 pixels avec la fonction `size()`.
+
+#### Question 6.1
+
+Afficher un point de couleur rouge au milieu de l'écran.
+
+<details>
+	<summary>Réponse</summary>
+	R :
+	<pre>
+		<code>
+			size(640, 360);
+			stroke(255, 0, 0);
+			point(320, 180);
+		</code>
+	</pre>
+</details>
+
+
+#### Question 6.2
+
+Afficher une ligne horizontale et une ligne verticale placées au milieu de l'écran. Puis placez le point rouge par dessus.
+
+<details>
+	<summary>Réponse</summary>
+	R :
+	<pre>
+		<code>
+			size(640, 360);
+			line(0, 180, 640, 180);
+			line(320, 0, 320, 640);
+			stroke(255, 0, 0);
+			point(320, 180);
+		</code>
+	</pre>
+</details>
+
+#### Question 6.3
+
+Par dessus le sketch de la `question 6.2`, ajouter un cercle bleu avec des bordures noires, un triangle jaune avec des bordures rouges et un carré rose sans bordure. Les trois formes ajoutées ne doivent pas se toucher et ne doivent pas toucher le point rouge du centre.
+
+<details>
+	<summary>Réponse</summary>
+	R :
+	<pre>
+		<code>
+			size(640, 360);
+			line(0, 180, 640, 180);
+			line(320, 0, 320, 640);
+			fill(0, 0, 255);
+			circle(70, 100, 100);
+			fill(232, 220, 0);
+			stroke(255, 0, 0);
+			triangle(250, 100, 200, 300, 300, 300);
+			fill(224, 0, 232);
+			stroke(0,0,0,0); // ou stroke({même couleur que le fill au dessus});
+			square(450, 100, 220);
+			stroke(255, 0, 0);
+			point(320, 180);
+		</code>
+	</pre>
+</details>
+
+### Fonctions personnalisées
+
+Nous allons maintenant créer une fonction simple nommée `sum` qui va calculer la somme entre deux arguments `a` et `b` : 
+
+```java
+int sum(int a, int b) {
+	return a + b;
+}
+```
+
+Testons cette fonction avec trois variables :
+
+```java
+int x = 2;
+int y = 10;
+int z = random(10);
+print(z);
+print(sum(x, y));
+print(sum(x, z));
+print(sum(y, z)); 
+```
+
+Résultat :
+
+```java
+7 // z
+12 // x + y
+9 // x + z
+17 // y + z
+```
+
+Nous allons maintenant créer une forme :
+
+Construisons un oeil grâce aux fonctions `ellipse` et `circle`.
+
+```java
+void eye(float x, float y) {
+	stroke(0, 0, 0, 0);
+	ellipse(x, y, 250, 100);
+	fill(0, 0, 0);
+	circle(x, y, 50);
+}
+```
+
+Résultat : 
+
+![eye01](../src/assets/img/eye01.png)
+
 ## Programmation Orientée Objets
+
+## Commentaires
 
 ## Mini-projet : Le chat vous suit des yeux!
 
