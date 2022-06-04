@@ -429,6 +429,21 @@ if (expression) {
 	</pre>
 </details>
 
+## Commentaires
+
+Les commentaires sont des séquences de textes qui destinés à l'humain et ignorés par le programme. Pour cela on utilise différents symboles listés dans ce tableau
+
+| Nom                          | Symbole  | Description                       |
+|:-----------------------------|:--------:|:----------------------------------|
+| Commentaire                  | `//`     | Commentaire sur une ligne         |
+| Commentaire multi-ligne      | `/* */`  | Commentaire sur  plusieurs lignes |
+| Commentaire de documentation | `/** */` | Documentation                     |
+
+Exemples : 
+
+![commentaires01](../src/assets/img/commentaires01.png)
+
+
 ## Instructions conditionnelles
 
 ### if
@@ -791,16 +806,16 @@ On peut utiliser le mot-clé `break` pour sortir de cette boucle.
 `for` est une boucle d'itération ("Pour" en français). Elle s'écrit de cette façon :
 
 ```java
-for (itérateur; condition; pas) {
+for (iterateur; condition; pas) {
 	// Instruction
 }
 ```
 
 La boucle `for` utilise trois paramètres :
 
-- `itérateur` : Une variable à déclarer et initialiser à une valeur itérable.
-- `condition` : Une condition quelconque, souvent utilisant l'`itérateur` et un opérateur de comparaison.
-- `pas` : Le pas que vous voulez donner à l'`itérateur` à chaque itération de la boucle, généralement on place `itérateur++` afin d'incrémenter un entier à chaque itération.
+- `iterateur` : Une variable à déclarer et initialiser à une valeur itérable.
+- `condition` : Une condition quelconque, souvent utilisant l'`iterateur` et un opérateur de comparaison.
+- `pas` : Le pas que vous voulez donner à l'`iterateur` à chaque itération de la boucle, généralement on place `iterateur++` afin d'incrémenter un entier à chaque itération.
 
 Exemple :
 
@@ -896,7 +911,7 @@ for (int a = 0; a < 10; a++) {
 
 ## Fonctions
 
-Les fonctions sont des sous-programme permettant d'effectuer des opérations répétitives. Au lieu d'écrire un code complet où des instructuions se répètent de manière similaire. Nous pouvons créer une fonction et appeler celle-ci afin d'exécuter la partie de code répétitive. Les fonctions permettent de simplifier l'écriture et la lecture de code, elles permettent aussi de faciliter l'optimisation de notre programme.
+Les fonctions sont des sous-programmes permettant d'effectuer des opérations répétitives. Au lieu d'écrire un code complet où des instructuions se répètent de manière similaire. Nous pouvons créer une fonction et appeler celle-ci afin d'exécuter la partie de code répétitive. Les fonctions permettent de simplifier l'écriture et la lecture de code, elles permettent aussi de faciliter l'optimisation de notre programme.
 
 Sur Processing, une fonction s'écrit de la sorte :
 
@@ -1133,10 +1148,100 @@ Résultat :
 
 ![eye01](../src/assets/img/eye01.png)
 
-## Programmation Orientée Objets
+Essayez maintenant de faire apparaitre deux yeux avec la fonction `eye()`.
 
-## Commentaires
+Vous pouvez voir que le deuxième oeil est apparu en noir, cela est dû à la dernière occurence de la fonction `fill()`, en effet, la dernière couleur de remplissage instauré à Processing est le noir, le traitement des données va donc remplir chacune des prochaines formes en noir.
+
+Pour résoudre ce problème, il suffit d'initialiser la fonction `eye()` avec un `fill(255, 255, 255)` par défaut qui est la couleur blanche. Par suite, nous pouvons aussi effectuer une réinitialisation à la fin de la fonction `eye()`, c'est d'ailleurs, la meilleure pratique :
+
+Initialisation : 
+
+```java
+void eye(float x, float y) {
+  fill(255, 255, 255); // Initialisation de la couleur
+  stroke(0, 0, 0, 0);
+  ellipse(x, y, 250, 100);
+  fill(0, 0, 0);
+  circle(x, y, 50);
+}
+```
+
+Ré-initialisation en fin de code :
+
+```java
+void eye(float x, float y) {
+  stroke(0, 0, 0, 0);
+  ellipse(x, y, 250, 100);
+  fill(0, 0, 0);
+  circle(x, y, 50);
+  fill(255, 255, 255); // Initialisation de la couleur
+  stroke(0, 0, 0, 255); // Initialisation des contours
+}
+```
+
+L'initialisation sera une action que nous allons devoir répéter pour beaucoup de nos créations et elle nous permet de garder une certaine logique lors de nos créations de formes géométriques dans notre sketch.
+
+Par ce principe, une action répétable contenant plus d'une instruction se doit d'être une fonction !
+
+Créer donc la fonction `init()` prenant aucun argument qui devra initialiser la couleur et les contours des formes.
+
+<details>
+	<summary>Réponse</summary>
+	R :
+	<pre>
+		<code>
+			void init() {
+				fill(255, 255, 255);
+				stroke(0, 0, 0, 255);
+			}
+		</code>
+	</pre>
+</details>
+
+Très bien ! Maintenant, utilisez cette fonction `init()` dans la fonction `eye()` et testez de faire apparaitre deux yeux comme demandé précédement.
+
+<details>
+	<summary>Réponse</summary>
+	R :
+	<pre>
+		<code>
+			void setup() {
+			  size(640, 360);
+			  eye(random(640), random(360));
+			  eye(random(640), random(360));
+			}
+		</code>
+		<code>
+			void init() {
+			  fill(255, 255, 255);
+			  stroke(0, 0, 0, 255);
+			}
+		</code>
+		<code> 
+			void eye(float x, float y) {
+			  stroke(0, 0, 0, 0);
+			  ellipse(x, y, 250, 100);
+			  fill(0, 0, 0);
+			  circle(x, y, 50);
+			  init();
+			}
+		</code>
+	</pre>
+</details>
+
+Les deux yeux devraient apparaitre sans problème.
+
+Félicitations ! Vous êtes maintenant officiellement un programmeur  Processing Java débutant !
 
 ## Mini-projet : Le chat vous suit des yeux!
+
+Nous savons que vous voulez en apprendre plus ! Mais on a besoin de vous tout de suite !
+
+Le chef voudrait avoir une animation faite avec Processing, voici le cahier des charges :
+
+- Une tête de chat bleu (Tête, oreilles, yeux, nez, moustaches, bouche)
+- Les pupilles verte du chat doivent suivre le curseur de la souris
+
+## Programmation Orientée Objets
 
 ## Projet final : Pong 
