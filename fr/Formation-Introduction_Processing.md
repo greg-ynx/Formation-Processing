@@ -1233,15 +1233,90 @@ Les deux yeux devraient apparaitre sans problème.
 
 Félicitations ! Vous êtes maintenant officiellement un programmeur  Processing Java débutant !
 
-## Mini-projet : Le chat vous suit des yeux!
+## Mini-projet : Le chat bleu vous suit des yeux!
 
 Nous savons que vous voulez en apprendre plus ! Mais on a besoin de vous tout de suite !
 
-Le chef voudrait avoir une animation faite avec Processing, voici le cahier des charges :
+Le chef voudrait avoir un dessin fait avec Processing, voici le cahier des charges :
 
 - Une tête de chat bleu (Tête, oreilles, yeux, nez, moustaches, bouche)
-- Les pupilles verte du chat doivent suivre le curseur de la souris
+
+Voici à quoi devrait ressembler le chat au final :
+
+![chat_bleu](../src/assets/img/chatbleu01.png)
+
+<details>
+	<summary>Réponse proposée</summary>
+	R :
+	<pre>
+		<code>
+			color c = #0000FF;
+			void setup() {
+			  size(640, 360);
+			  cat(320, 180);
+			}
+		</code>
+		<code>
+			void init() {
+			  fill(255, 255, 255, 255);
+			  stroke(0, 0, 0, 255);
+			}
+		</code>
+		<code>
+			void eye(float x, float y) {
+			  stroke(0, 0, 0, 0);
+			  ellipse(x, y, 75, 50);
+			  fill(0, 0, 0);
+			  circle(x, y, 25);
+			  init();
+			}
+		</code>
+		<code>
+			void cat(float x, float y) {
+			  stroke(0, 0, 0, 0);
+			  fill(c);
+			  circle(x, y, 250); // Forme de la tête
+			  triangle(225, 100, x-50, y-160, 310, 100); // Oreille gauche
+			  triangle(325, 100, x+50, y-160, 415, 100); // Oreille droite
+			  // Bouche
+			  fill(191, 191, 191);
+			  circle(x-20, y+20, 45); // Patrtie gauche de la bouche
+			  circle(x+20, y+20, 45); // Partie droite de la bouche
+			  // Nez
+			  stroke(0, 0, 0, 0);
+			  fill(252, 145, 160);
+			  triangle(x-10, y, x, y+20, x+10, y);
+			  // Yeux
+			  fill(255, 255, 255);
+			  eye(x-50, y-30);
+			  eye(x+50, y-30);
+			  //Moustaches
+			  stroke(0, 0, 0, 255);
+			  // Moustaches de gauche
+			  line(x-30, y+10, x-80, y-20);
+			  line(x-30, y+20, x-90, y+20);
+			  line(x-30, y+30, x-80, y+60);
+			  // Moustaches de droite
+			  line(x+30, y+10, x+80, y-20);
+			  line(x+30, y+20, x+90, y+20);
+			  line(x+30, y+30, x+80, y+60);
+			}
+		</code>
+	</pre>
+</details>
+
+Vous avez terminé le dessin ? Très bien ! Mais le chef veut maintenant une animation des yeux qui devraient suivre curseur de la souris.
+
+Pour cela, on aura recourt à la programmation orientée objets!
 
 ## Programmation Orientée Objets
+
+La Programmation Orientée Objets (POO) est une méthode de programation informatique organisée autour des objets. On appelle objet, un ensemble de variables complexes et de fonctions. Par exemple, une grande partie des types du langage Processing sont en fait des objets !
+
+### Class
+
+Une classe est un ensemble de code contenant des variables et des fonctions permettant de créer des objets. Par suite, une classe peut contenir plusieurs objets.
+
+
 
 ## Projet final : Pong 
