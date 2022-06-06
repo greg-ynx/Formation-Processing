@@ -1475,5 +1475,3 @@ Résultat :
 Félicitations ! Vous êtes maintenant un programmeur Processing ayant des compétences en programation orientée objets ! 
 
 Ceci conclu la partie "Introduction à Processing" de la formation Processing, n'hésitez pas à ouvrir un "problème" sur le [repository GitHub associé](https://github.com/greg-ynx/Formation-Processing) si vous avez une question concernant des notions sur Processing.
-
-## Projet final : Pong 
