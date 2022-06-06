@@ -1233,7 +1233,7 @@ Les deux yeux devraient apparaitre sans problème.
 
 Félicitations ! Vous êtes maintenant officiellement un programmeur  Processing Java débutant !
 
-## Mini-projet : Le chat bleu vous suit des yeux!
+## Mini-projet : Le chat bleu vous suit des yeux! Partie 1
 
 Nous savons que vous voulez en apprendre plus ! Mais on a besoin de vous tout de suite !
 
@@ -1313,10 +1313,167 @@ Pour cela, on aura recourt à la programmation orientée objets!
 
 La Programmation Orientée Objets (POO) est une méthode de programation informatique organisée autour des objets. On appelle objet, un ensemble de variables complexes et de fonctions. Par exemple, une grande partie des types du langage Processing sont en fait des objets !
 
-### Class
+### Classe
 
 Une classe est un ensemble de code contenant des variables et des fonctions permettant de créer des objets. Par suite, une classe peut contenir plusieurs objets.
 
+#### Définir une classe avec Processing
 
+Pour définir une classe dans Processing on procède comme ci-dessous : 
+
+```java
+class Name {
+	// Instructions
+}
+```
+
+Pour pouvoir animer les yeux du chat bleu nous allons créer une classe `Eye` dans un autre sketch :
+
+```java
+class Eye { }
+```
+
+### Attributs de classe
+
+On appelle `attribut` de classe une variable propre à une `class`.
+
+En reprennant la fonction `eye()` que nous avions créé précédement, on peut transformer les paramètres `x` et `y` de cette fonction en attributs ! 
+
+```java
+class Eye {
+
+	float x;
+	float y;
+
+}
+```
+
+Ici, nous avons déclarer les attributs de la classe `Eye` mais nous n'avons pas assigné de valeur à ces attributs. C'est normal, la déclaration d'attributs dans une classe se fait à titre indicatif des attributs qui la composent.
+
+Mais comment fait on pour appeler une classe ou un objet ? On utilise un `constructeur`.
+
+### Constructeur
+
+Un constructeur est une méthode (fonction contenue dans une classe) qui sert à créer une `instance` de la classe construite.
+
+Une `instance` est un objet construit reprenant les caractéristiques définis par une classe.
+
+On ajoute donc un constructeur à la classe `Eye` : 
+
+```java
+class Eye {
+
+	float x;
+	float y;
+
+	/**
+	 * Constructeur
+	 */
+	Eye(float tempX, float tempY) {
+		x = tempX;
+		y = tempY;
+	}
+}
+```
+
+Le construteur `Eye` se doit d'avoir le même nom que sa classe associé et nous n'avons pas besoin de spécifier son type lors de sa définition.
+
+### Méthode
+
+Une méthode est une fonction contenue dans une classe.
+
+Maintenant nous devons pouvoir créer l'oeil comme nous l'avions fait précédement, pour cela, nous allons créer trois méthodes, `initColors()` qui va réinitialiser les couleurs de remplissage et de contours des formes, `updatePos()` qui va mettre à jour la position de la pupille de l'oeil et `display()` qui contiendra toutes les formes géométriques utilisées : 
+
+```java
+class Eye {
+
+  int x;
+  int y;
+  float angle;
+
+  Eye(int tempX, int tempY) {
+    x = tempX;
+    y = tempY;
+    angle = 0.0;
+  }
+
+  // Méthodes
+
+  void initColors() {
+
+  }
+
+  void updatePos(int movX, int movY) {
+
+  }
+
+  void display() {
+
+  }
+}
+```
+
+## Mini-projet : Le chat bleu vous suit des yeux ! Partie 2
+
+A vous de créer l'animation des yeux ! Aidez vous de la documentation Processing cet [exemple](https://processing.org/examples/arctangent.html).
+
+<details>
+	<summary>Solution</summary>
+	R : 
+	<pre>
+		<code>
+		class Eye {
+		</code>
+		<code>
+		  int x;
+		  int y;
+		  float angle;
+	  	</code>
+		<code>
+		  Eye(int tempX, int tempY) {
+		    x = tempX;
+		    y = tempY;
+		    angle = 0.0;
+		  }
+		</code>
+		<code>
+		  // Méthodes
+	 	</code>
+		<code>
+		  void initColors() {
+		    fill(255); // Remplissage en blanc
+		    stroke(0); // Contours noirs
+		  }
+		</code>
+		<code>
+		  void updatePos(int movX, int movY) {
+		    angle = atan2(movY-y, movX-x); // Mouvements de l'oeil
+		  }
+		</code>
+		<code>
+		  void display() {
+		    pushMatrix(); // Sauvegarde les données initiales
+		    noStroke(); // Supprime les contours
+		    translate(x,y); // Déplace les formes suivantes
+		    fill(255); // Remplissage en blanc
+		    ellipse(0, 0, 75, 50); // Partie blanche de l'oeil
+		    rotate(angle); // Rotation de la prochaine forme
+		    fill(0); // Remplissage en noir
+		    circle(25/4, 0, 25); // Pupille
+		    initColors(); // Ré-initialisation des couleurs en fin de code
+		    popMatrix(); // Restaure les données initiales
+		  }
+		}
+		</code>
+	</pre>
+</details>
+
+Résultat : 
+
+![Animation chat bleu](../src/assets/gif/chatbleuanimation.gif)
+
+Félicitations ! Vous êtes maintenant un programmeur Processing ayant des compétences en programation orientée objets ! 
+
+Ceci conclu la partie "Introduction à Processing" de la formation Processing, n'hésitez pas à ouvrir un "problème" sur le [repository GitHub associé](https://github.com/greg-ynx/Formation-Processing) si vous avez une question concernant des notions sur Processing.
 
 ## Projet final : Pong 
