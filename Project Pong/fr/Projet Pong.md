@@ -1075,7 +1075,7 @@ void gameOverPage() {
 
 La fonction `gameOver()` va vérifier si le score d'un des deux joueur est égale au score maximum `winScore`.
 
-Une fois le score atteint par l'un des joueurs, la fonction `gameOverPage()` est appelée.
+Une fois le score atteint par l'un des joueurs, le "Game Over" est affiché et la fonction `gameOverPage()` est appelée.
 
 ### gameOverPage()
 
@@ -1084,3 +1084,282 @@ Cette page pause le jeu et attend que les joueurs clique afin de relancer une pa
 Au final, on obtient un jeu "Pong" complet :
 
 ![processing_pong01](../src/assets/gif/processing_pong01.gif)
+
+## Apportez votre touche d'originalité !
+
+Super ! On a un jeu pong fonctionnel complet ! 
+
+Mais le jeu est assez ennuyeux... On pourait, ajouter des couleurs, voir des images pour améliorer l'aspect graphique du jeu.
+
+Personnellement, nous voudrions améliorer le gameplay du jeu. A chaque fois que la balle est renvoyée par un joueur, la vitesse de la balle devrait augmenter d'une unité !
+
+Faites cette amélioration !
+
+<details>
+	<summary>Solution</summary>
+	<p>S :</p>
+	<pre>
+		<code>
+			void collision() {
+			  if (bb.x - bb.size/2 < player1.x + player1.w/2
+			      && bb.y + bb.size/2 > player1.y - player1.h/2
+			      && bb.y - bb.size/2 < player1.y + player1.h/2) {
+			        if (bb.speedX < 0) {
+			          bb.speedX--;
+			          bb.speedX = - bb.speedX;
+			        }
+			  }
+		</code>
+		<code>
+			  if (bb.x + bb.size/2 > player2.x - player2.w/2
+			      && bb.y + bb.size/2 > player2.y - player2.h/2
+			      && bb.y - bb.size/2 < player2.y + player2.h/2) {
+			        if (bb.speedX > 0) {
+			          bb.speedX++;
+			          bb.speedX = - bb.speedX;
+			        }
+			  }
+			}
+		</code>
+	</pre>
+</details>
+
+Maintenant, testez votre jeu ! 
+
+## Code final
+
+Voici le code complet que vous devriez avoir écrit tout au long de ce projet :
+
+### Main
+
+```java
+color bgColor = #000000;
+color objColor = #FFFFFF;
+BouncingBall bb;
+Bar player1, player2;
+int score1, score2;
+int gameBallSpeed = 2;
+int winScore = 3;
+
+void setup() {
+  size(800, 600);
+  background(bgColor);
+  stroke(objColor, 128);
+  strokeWeight(5);
+  line(width/2, 0, width/2, height);
+  bb = new BouncingBall(width / 2, height / 2, 20, gameBallSpeed);
+  player1 = new Bar(40, height / 2, 10, 100);
+  player2 = new Bar(width - 40, height / 2, 10, 100);
+  textSize(30);
+}
+
+void draw() {
+  background(bgColor);
+  stroke(objColor, 128);
+  strokeWeight(5);
+  line(400, 0, 400, 600);
+  bb.moveBall();
+  bb.bounce();
+  collision();
+  bb.display();
+  player1.moveBar();
+  player2.moveBar();
+  player1.restriction();
+  player2.restriction();
+  player1.display();
+  player2.display();
+  scores();
+  gameOver();
+}
+
+void collision() {
+  if (bb.x - bb.size/2 < player1.x + player1.w/2
+      && bb.y + bb.size/2 > player1.y - player1.h/2
+      && bb.y - bb.size/2 < player1.y + player1.h/2) {
+        if (bb.speedX < 0) {
+          bb.speedX--;
+          bb.speedX = - bb.speedX;
+        }
+  }
+  
+  if (bb.x + bb.size/2 > player2.x - player2.w/2
+      && bb.y + bb.size/2 > player2.y - player2.h/2
+      && bb.y - bb.size/2 < player2.y + player2.h/2) {
+        if (bb.speedX > 0) {
+          bb.speedX++;
+          bb.speedX = - bb.speedX;
+        }
+  }
+}
+
+void scores() {
+  fill(objColor);
+  text(score1, width * 0.25, 50);
+  text(score2, width * 0.75, 50);
+}
+
+void gameOver() {
+  textAlign(CENTER, CENTER);
+  if(score1 == winScore) {
+    text("Game Over",  width/2, height/2 - 130);
+    fill(0, 255, 0);
+    text("Player 1 wins !", width/2, height/2 - 85);
+    text("Click to play again", width/2, height/2 - 50);
+    gameOverPage();
+  }
+  
+  if(score2 == winScore) {
+    text("Game Over",  width/2, height/2 - 130);
+    fill(0, 255, 0);
+    text("Player 2 wins !", width/2, height/2 - 85);
+    text("Click to play again", width/2, height/2 - 50);
+    gameOverPage();
+  }
+}
+
+void gameOverPage() {
+  bb.speedX = 0;
+  bb.speedY = 0;
+  if(mousePressed) {
+    score1 = 0;
+    score2 = 0;
+    setup();
+  }
+}
+
+void keyPressed() {
+  if (key == 'z' || key == 'Z') {
+    player1.up = true;
+  }
+  else if (key == 's' || key == 'S') {
+    player1.down = true;
+  }
+  if(keyCode == UP) {
+    player2.up = true;
+  }
+  else if (keyCode == DOWN) {
+    player2.down = true;
+  }
+}
+
+void keyReleased() {
+  if (key == 'z' || key == 'Z') {
+    player1.up = false;
+  }
+  else if (key == 's' || key == 'S') {
+    player1.down = false;
+  }
+  if(keyCode == UP) {
+    player2.up = false;
+  }
+  else if (keyCode == DOWN) {
+    player2.down = false;
+  }
+}
+```
+
+### BouncingBall
+
+```java
+class BouncingBall {
+  
+  int x, y, size, speedX, speedY;
+  color ballColor;
+
+  BouncingBall(int tempX, int tempY, int tempSize, int tempSpeedX) {
+    x = tempX;
+    y = tempY;
+    size = tempSize;
+    ballColor = #FFFFFF;
+    speedX = tempSpeedX;
+    speedY = 3;
+  }
+  
+  void moveBall() {
+    x += speedX;
+    y += speedY;
+  }
+  
+  void bounce() {
+    if (x - size / 2 < 0) {
+      speedX = -speedX;
+      gameBallSpeed = 2;
+      setup();
+      score2++;
+    }
+    else if (x + size / 2 > width) {
+      speedX = -speedX;
+      gameBallSpeed = -2;
+      setup();
+      score1++;
+    }
+    
+    if (y - size / 2 < 0) {
+      speedY = -speedY;
+    }
+    else if (y + size / 2 > height) {
+      speedY = -speedY;
+    }
+  }
+  
+  void display() {
+    pushMatrix();
+    noStroke();
+    fill(ballColor);
+    circle(x, y, size);
+    popMatrix();
+  }
+  
+}
+```
+
+### Bar
+
+```java
+class Bar {
+  int x, y, w, h, speed;
+  color barColor;
+  boolean up, down;
+  
+  Bar(int tempX, int tempY, int tempW, int tempH) {
+    x = tempX;
+    y = tempY;
+    w = tempW;
+    h = tempH;
+    barColor = #FFFFFF;
+    speed = 5;
+    up = false;
+    down = false;
+  }
+  
+  void moveBar() {
+    if (up) {
+      y -= speed;
+    }
+    else if (down) {
+      y += speed;
+    }    
+  }
+  
+  void restriction() {
+    if (y - h / 2 < 0) {
+      y += speed;
+    }
+    else if (y + h / 2 > height) {
+      y -= speed;
+    }
+  }
+  
+  void display() {
+    pushMatrix();
+    fill(barColor);
+    rect(x, y, w, h);
+    rectMode(CENTER);
+    popMatrix();
+  }
+}
+```
+
+# FIN
+
+Si vous avez besoin d'aide ou que vous avez trouvé des erreurs dans le projet, n'hésitez pas à ouvrir une `issue` sur le répository GitHub associé !
