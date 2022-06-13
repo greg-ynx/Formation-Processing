@@ -820,4 +820,182 @@ On reprend ensuite la méthode `bounce()` dans la classe `BouncingBall` :
 	<p>S :</p>
 	<pre>
 		<code>
-			
+			void bounce() {
+		    if (x - size / 2 < 0) {
+		      speedX = -speedX;
+		      setup(); 
+		      score2++;
+		    }
+		    else if (x + size / 2 > width) {
+		      speedX = -speedX;
+		      setup();
+		      score1++;
+		    }
+    </code>
+    <code>
+		    if (y - size / 2 < 0) {
+		      speedY = -speedY;
+		    }
+		    else if (y + size / 2 > height) {
+		      speedY = -speedY;
+		    }
+		  }
+	  </code>
+  </pre>
+</details>
+
+La position de la balle est bien réinitialisée et dans la théorie, les scores sont bien censés avoir changé.
+
+Pour améliorer le gameplay, il faudrait que la balle aille dans le sens de la personne ayant marqué.
+
+Pour cela, ajouter le code suivant :
+
+
+Main : 
+```java
+color bgColor = #000000;
+color objColor = #FFFFFF;
+BouncingBall bb;
+Bar player1, player2;
+boolean up, down;
+int score1, score2;
+int gameBallSpeed = 2;
+
+void setup() {
+  size(800, 600);
+  background(bgColor);
+  stroke(objColor, 128);
+  strokeWeight(5);
+  line(width/2, 0, width/2, height);
+  bb = new BouncingBall(width / 2, height / 2, 20, gameBallSpeed);
+  player1 = new Bar(40, height / 2, 10, 100);
+  player2 = new Bar(width - 40, height / 2, 10, 100);
+  up = false;
+  down = false;
+}
+
+void draw() {
+  background(bgColor);
+  stroke(objColor, 128);
+  strokeWeight(5);
+  line(400, 0, 400, 600);
+  bb.moveBall();
+  bb.bounce();
+  collision();
+  bb.display();
+  player1.moveBar();
+  player2.moveBar();
+  player1.restriction();
+  player2.restriction();
+  player1.display();
+  player2.display();
+}
+
+void collision() {
+  if (bb.x - bb.size/2 < player1.x + player1.w/2
+      && bb.y + bb.size/2 > player1.y - player1.h/2
+      && bb.y - bb.size/2 < player1.y + player1.h/2) {
+        if (bb.speedX < 0) {
+          bb.speedX--;
+          bb.speedX = - bb.speedX;
+        }
+  }
+  
+  if (bb.x + bb.size/2 > player2.x - player2.w/2
+      && bb.y + bb.size/2 > player2.y - player2.h/2
+      && bb.y - bb.size/2 < player2.y + player2.h/2) {
+        if (bb.speedX > 0) {
+          bb.speedX++;
+          bb.speedX = - bb.speedX;
+        }
+  }
+}
+
+void keyPressed() {
+  if (key == 'z' || key == 'Z') {
+    player1.up = true;
+  }
+  else if (key == 's' || key == 'S') {
+    player1.down = true;
+  }
+  if(keyCode == UP) {
+    player2.up = true;
+  }
+  else if (keyCode == DOWN) {
+    player2.down = true;
+  }
+}
+
+void keyReleased() {
+  if (key == 'z' || key == 'Z') {
+    player1.up = false;
+  }
+  else if (key == 's' || key == 'S') {
+    player1.down = false;
+  }
+  if(keyCode == UP) {
+    player2.up = false;
+  }
+  else if (keyCode == DOWN) {
+    player2.down = false;
+  }
+}
+```
+
+Ball :
+```java
+class BouncingBall {
+  
+  int x, y, size, speedX, speedY;
+  color ballColor;
+
+  BouncingBall(int tempX, int tempY, int tempSize, int tempSpeedX) {
+    x = tempX;
+    y = tempY;
+    size = tempSize;
+    ballColor = #FFFFFF;
+    speedX = tempSpeedX;
+    speedY = 3;
+  }
+  
+  void moveBall() {
+    x += speedX;
+    y += speedY;
+  }
+  
+  void bounce() {
+    if (x - size / 2 < 0) {
+      speedX = -speedX;
+      gameBallSpeed = 2;
+      setup(); 
+      score1++;
+    }
+    else if (x + size / 2 > width) {
+      speedX = -speedX;
+      gameBallSpeed = -2;
+      setup();
+      score2++;
+    }
+    
+    if (y - size / 2 < 0) {
+      speedY = -speedY;
+    }
+    else if (y + size / 2 > height) {
+      speedY = -speedY;
+    }
+  }
+  
+  void display() {
+    pushMatrix();
+    noStroke();
+    fill(ballColor);
+    circle(x, y, size);
+    popMatrix();
+  }
+  
+}
+```
+
+On a ajouté la variable `gameBallSpeed` qui est une variable accessible globalement dans chacun des sketchs. Cette variable sera modifiée après chaque but afin d'indiquer l'oriantation de la balle après réinitialisation.
+
+
