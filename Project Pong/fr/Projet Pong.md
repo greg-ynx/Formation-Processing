@@ -12,7 +12,7 @@ Il faut absolument avoir une base sur la logique algorithmique, sur le langage d
 
 ## Analyse de l'inspiration
 
-Le but étant de reprendre et recodé un jeu connu des années 70, nous allons nous basé sur une simple capture d'écran afin de construire notre cahier des charges.
+Le but étant de reprendre et recoder un jeu connu des années 70, nous allons nous baser sur une simple capture d'écran afin de construire notre cahier des charges.
 
 ![Pong](../src/assets/img/Pong.png)
 
@@ -998,4 +998,89 @@ class BouncingBall {
 
 On a ajouté la variable `gameBallSpeed` qui est une variable accessible globalement dans chacun des sketchs. Cette variable sera modifiée après chaque but afin d'indiquer l'oriantation de la balle après réinitialisation.
 
+### Système d'affichage des scores
 
+Il s'agit d'un affichage de la valeur de `score1` et `score2` au milieu des deux parties de la scène.
+
+Créez la fonction `scores()` qui affiche le score des deux joueurs dans la partie et ajoutez la à la fin de la fonction `draw()` afin de rafraichir les scores : 
+
+Ajoutez `textSize(30);` à la fin du `setup()` afin d'agrandir la taille de la police des scores.
+
+<details>
+	<summary>Solution</summary>
+	<p>S :</p>
+	<pre>
+		<code>
+			void scores() {
+			  fill(objColor);
+			  text(score1, width * 0.25, 50);
+			  text(score2, width * 0.75, 50);
+			}
+		</code>
+	</pre>
+	<p>Résultat :</p>
+	<img src="../src/assets/gif/scores01.gif">
+</details>
+
+Nous avons maintenant un jeu fonctionnel... infini !
+
+En effet toute la logique du jeu est implémentée, les scores sont affichés, on pourrait dire que notre jeu "Pong" est terminé.
+
+Terminé ? Le je ne se termine justement jamais !
+
+## Game Over
+
+Essayons de créer un game over à notre jeu.
+
+Pour cela, nous allons fixer le score maximal du jeu à 3 : 
+
+```java
+int winScore = 3;
+```
+
+On ajoute ensuite les fonctions `gameOver()` et `gameOverPage()`
+
+```java
+void gameOver() {
+  textAlign(CENTER, CENTER);
+  if(score1 == winScore) {
+    text("Game Over",  width/2, height/2 - 130);
+    fill(0, 255, 0);
+    text("Player 1 wins !", width/2, height/2 - 85);
+    text("Click to play again", width/2, height/2 - 50);
+    gameOverPage();
+  }
+  
+  if(score2 == winScore) {
+    text("Game Over",  width/2, height/2 - 130);
+    fill(0, 255, 0);
+    text("Player 2 wins !", width/2, height/2 - 85);
+    text("Click to play again", width/2, height/2 - 50);
+    gameOverPage();
+  }
+}
+
+void gameOverPage() {
+  bb.speedX = 0;
+  bb.speedY = 0;
+  if(mousePressed) {
+    score1 = 0;
+    score2 = 0;
+    setup();
+  }
+}
+```
+
+### gameOver()
+
+La fonction `gameOver()` va vérifier si le score d'un des deux joueur est égale au score maximum `winScore`.
+
+Une fois le score atteint par l'un des joueurs, la fonction `gameOverPage()` est appelée.
+
+### gameOverPage()
+
+Cette page pause le jeu et attend que les joueurs clique afin de relancer une partie.
+
+Au final, on obtient un jeu "Pong" complet :
+
+![processing_pong01](../src/assets/gif/processing_pong01.gif)
