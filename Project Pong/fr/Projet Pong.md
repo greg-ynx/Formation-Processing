@@ -421,5 +421,403 @@ Ouvrez un nouvel onglet nommé `Bar` dans lequel nous allons créer une classe d
 
 Cette classe devra prendre en argument sa position en `x`, sa position en `y`, sa largeur `w` et sa hauteur `h`. Parmis ses attributs devra se trouver sa couleur `barColor` (blanche) et sa vitesse `speed` = 5. Les méthodes attendues de la classe sont `display()` et `moveBar()`.
 
-Créez la classe `Bar`.
+Créez la classe `Bar` et construisez deux instances de cette classe dans `Main`.
 
+<details>
+	<summary>Solution</summary>
+	Classe <code>Bar</code>
+	<pre>
+		<code>
+				class Bar {
+				  int x, y, w, h, speed;
+				  color barColor;
+	  </code>
+	  <code>
+				  Bar(int tempX, int tempY, int tempW, int tempH) {
+				    x = tempX;
+				    y = tempY;
+				    w = tempW;
+				    h = tempH;
+				    barColor = #FFFFFF;
+				    speed = 5;
+				  }
+		</code>
+		<code>		  
+				  void moveBar() { }
+		</code>
+		<code>		  
+				  void display() {
+				    pushMatrix();
+				    fill(barColor);
+				    rect(x, y, w, h);
+				    rectMode(CENTER);
+				    popMatrix();
+				  }
+			  }
+	  </code>
+	</pre>
+	<code>Main</code>
+	<pre>
+		<code>
+			color bgColor = #000000;
+			color objColor = #FFFFFF;
+			BouncingBall bb;
+			Bar player1, player2;
+		</code>
+		<code>
+			void setup() {
+			  size(800, 600);
+			  background(bgColor);
+			  stroke(objColor, 128);
+			  strokeWeight(5);
+			  line(width/2, 0, width/2, height);
+			  bb = new BouncingBall(width / 2, height / 2, 20);
+			  player1 = new Bar(40, height / 2, 10, 100);
+			  player2 = new Bar(width - 40, height / 2, 10, 100);
+			}
+		</code>
+		<code>
+			void draw() {
+			  background(bgColor);
+			  stroke(objColor, 128);
+			  strokeWeight(5);
+			  line(400, 0, 400, 600);
+			  bb.moveBall();
+			  bb.bounce();
+			  bb.display();
+			  player1.display();
+			  player2.display();
+			}
+		</code>
+	</pre>
+	<p>Résultat :</p>
+	<img src="../src/assets/gif/bar01.gif">
+</details>
+
+On obtient les deux barres sur la scène. Néanmoins, nous ne pouvons pas les manipuler et la balle continue de les traverser.
+
+### Mouvements des barres
+
+Pour le mouvement des barres, nous avons seulement besoin de modifier sa position sur l'axe `y` (vertical).
+
+Nous allons utiliser les touches du clavier `z` pour aller vers le haut et `s` pour aller vers le bas.
+
+Pour cela, il faut créer dans le `main` deux fonctions `keyPressed()` et `keyReleased()` afin de travailler sur les données d'entrées des touches du clavier.
+
+```java
+boolean up, down;
+
+void setup() {
+  size(800, 600);
+  background(bgColor);
+  stroke(objColor, 128);
+  strokeWeight(5);
+  line(width/2, 0, width/2, height);
+  bb = new BouncingBall(width / 2, height / 2, 20);
+  player1 = new Bar(40, height / 2, 10, 100);
+  player2 = new Bar(width - 40, height / 2, 10, 100);
+  up = false;
+  down = false;
+}
+
+void keyPressed() {
+  if (key == 'z' || key == 'Z') {
+    player1.up = true;
+  }
+  else if (key == 's' || key == 'S') {
+    player1.down = true;
+  }
+}
+
+void keyReleased() {
+  if (key == 'z' || key == 'Z') {
+    player1.up = false;
+  }
+  else if (key == 's' || key == 'S') {
+    player1.down = false;
+  }
+}
+```
+
+Ensuite dans la méthode `moveBar()`, on écrit : 
+
+```java
+void moveBar() {
+    if (up) {
+      y -= speed;
+    }
+    else if (down) {
+      y += speed;
+    }    
+  }
+```
+
+Et enfin, on ajoute dans `Main` `draw()` : 
+
+```java
+...
+bb.display();
+player1.moveBar();
+player2.moveBar();
+player1.display();
+player2.display();
+```
+
+On obtient le résultat suivant :
+
+![bar02](../src/assets/gif/bar02.gif)
+
+Seulement la barre de gauche, c'est à dire `player1`, peut se déplacer. Il faut maintenant autoriser les mouvements du deuxième joueur.
+
+On reprend les fonctions `keyPressed()` et `keyReleased()` :
+
+```java
+void keyPressed() {
+  if (key == 'z' || key == 'Z') {
+    player1.up = true;
+  }
+  else if (key == 's' || key == 'S') {
+    player1.down = true;
+  }
+  if(keyCode == UP) {
+    player2.up = true;
+  }
+  else if (keyCode == DOWN) {
+    player2.down = true;
+  }
+}
+
+void keyReleased() {
+  if (key == 'z' || key == 'Z') {
+    player1.up = false;
+  }
+  else if (key == 's' || key == 'S') {
+    player1.down = false;
+  }
+  if(keyCode == UP) {
+    player2.up = false;
+  }	
+  else if (keyCode == DOWN) {
+    player2.down = false;
+  }
+}
+```
+
+On obtient : 
+
+![bar03](../src/assets/gif/bar03.gif)
+
+### Restriction des mouvements des barres
+
+Nous devons empêcher les barres de sortir de la scène.
+
+Pour cela, créez la méthode `restriction()` dans la classe `Bar` : 
+
+```java
+void restriction() {
+    if (y - h / 2 < 0) {
+      y += speed;
+    }
+    else if (y + h / 2 > height) {
+      y -= speed;
+    }
+}
+```
+
+Appelez ensuite la méthode `restriction()` sur vos instances `player1` et `player2` :
+
+```java
+...
+player1.restriction()
+player2.restriction()
+...
+```
+
+Résultat :
+
+![bar04](../src/assets/gif/bar04.gif)
+
+### Collision avec la balle
+
+Maintenant que les barres peuvent être manipulées, nous allons créer l'évènement de collision avec la balle.
+
+La logique est la suivante :
+
+- Si la balle touche la surface d'une des deux barres alors son mouvement en sur l'axe `x` doit aller à l'opposé. On dit alors qu'il y a collision.
+
+- Si l'extrémité gauche de la balle (resp. droite) touche l'extrémité droite (resp. gauche) de la barre de gauche (resp. droite), alors il y a collision.
+
+- Si l'extrémité basse de la balle touche l'extrémité haute d'une des barres alors il y a collision.
+
+- Si l'extrémité haute de la balle touche l'extrémité basse d'une des barres alors il y a collision.
+
+Créez la fonction `collision()`, appliquant les conditions citées ci-dessus sur les barres `player1` et `player2`.
+
+Rappel : Pour assembler plusieurs conditions dans la même instruction conditionnelle, vous pouvvez utiliser les opérateurs logiques `&&` et `||`.
+
+<details>
+	<summary>Solution</summary>
+	<p>S : </p>
+	<p>Fonction <code>collision()</code> :</p>
+	<pre>
+		<code>
+			void collision() {
+			  if (bb.x - bb.size/2 < player1.x + player1.w/2
+			      && bb.y + bb.size/2 > player1.y - player1.h/2
+			      && bb.y - bb.size/2 < player1.y + player1.h/2) {
+			        bb.speedX = - bb.speedX;
+			  }
+	  </code>
+	  <code>
+			  if (bb.x + bb.size/2 > player2.x - player2.w/2
+			      && bb.y + bb.size/2 > player2.y - player2.h/2
+			      && bb.y - bb.size/2 < player2.y + player2.h/2) {
+			        bb.speedX = - bb.speedX;
+			  }
+			}
+		</code>
+	</pre>
+	<p> Sketch <code>Main</code> :</p>
+	<pre>
+		<code>
+			color bgColor = #000000;
+			color objColor = #FFFFFF;
+			BouncingBall bb;
+			Bar player1, player2;
+			boolean up, down;
+		</code>
+	  <code>
+			void setup() {
+			  size(800, 600);
+			  background(bgColor);
+			  stroke(objColor, 128);
+			  strokeWeight(5);
+			  line(width/2, 0, width/2, height);
+			  bb = new BouncingBall(width / 2, height / 2, 20);
+			  player1 = new Bar(40, height / 2, 10, 100);
+			  player2 = new Bar(width - 40, height / 2, 10, 100);
+			  up = false;
+			  down = false;
+			}
+		</code>
+	  <code>
+			void draw() {
+			  background(bgColor);
+			  stroke(objColor, 128);
+			  strokeWeight(5);
+			  line(400, 0, 400, 600);
+			  bb.moveBall();
+			  bb.bounce();
+			  collision();
+			  bb.display();
+			  player1.moveBar();
+			  player2.moveBar();
+			  player1.restriction();
+			  player2.restriction();
+			  player1.display();
+			  player2.display();
+			}
+		</code>
+	  <code>
+			void collision() {
+			  if (bb.x - bb.size/2 < player1.x + player1.w/2
+			      && bb.y + bb.size/2 > player1.y - player1.h/2
+			      && bb.y - bb.size/2 < player1.y + player1.h/2) {
+			        bb.speedX = - bb.speedX;
+			  }
+  	</code>
+	  <code>
+			  if (bb.x + bb.size/2 > player2.x - player2.w/2
+			      && bb.y + bb.size/2 > player2.y - player2.h/2
+			      && bb.y - bb.size/2 < player2.y + player2.h/2) {
+			        bb.speedX = - bb.speedX;
+			  }
+			}
+		</code>
+	  <code>
+			void keyPressed() {
+			  if (key == 'z' || key == 'Z') {
+			    player1.up = true;
+			  }
+			  else if (key == 's' || key == 'S') {
+			    player1.down = true;
+			  }
+			  if(keyCode == UP) {
+			    player2.up = true;
+			  }
+			  else if (keyCode == DOWN) {
+			    player2.down = true;
+			  }
+			}
+		</code>
+	  <code>
+			void keyReleased() {
+			  if (key == 'z' || key == 'Z') {
+			    player1.up = false;
+			  }
+			  else if (key == 's' || key == 'S') {
+			    player1.down = false;
+			  }
+			  if(keyCode == UP) {
+			    player2.up = false;
+			  }
+			  else if (keyCode == DOWN) {
+			    player2.down = false;
+			  }
+			}
+		</code>
+	</pre>
+	<p>Résultat :</p>
+	<img src="../src/assets/gif/bar05.gif">
+</details>
+
+La balle rebondit bien au contact des barres, néanmoins, elle peut quand même passer derrière les barres et produire en effet de rebond non voulu. Pour éviter cela, on ajoute à la fonction `collision()` : 
+
+```java
+void collision() {
+  if (bb.x - bb.size/2 < player1.x + player1.w/2
+      && bb.y + bb.size/2 > player1.y - player1.h/2
+      && bb.y - bb.size/2 < player1.y + player1.h/2) {
+        if (bb.speedX < 0) {
+          bb.speedX = - bb.speedX;
+        }
+  }
+  
+  if (bb.x + bb.size/2 > player2.x - player2.w/2
+      && bb.y + bb.size/2 > player2.y - player2.h/2
+      && bb.y - bb.size/2 < player2.y + player2.h/2) {
+        if (bb.speedX > 0) {
+          bb.speedX = - bb.speedX;
+        }
+  }
+}
+```
+
+## Systèmes de score
+
+La mécanique de jeu est bientôt finie, il nous manque seulement :
+
+- Relancement de la balle au milieu après un but.
+
+- Affichage et attribution des scores sur la scène.
+
+### Système de buts
+
+Très simple ! On créé tout d'abord des variables entières `score1` et `score2` correspondant respectivement aux joueurs dans le sketch `Main` : 
+
+```java
+int score1, score2;
+```
+
+On reprend ensuite la méthode `bounce()` dans la classe `BouncingBall` :
+
+- Après avoir rebondit, il faut réinitialiser la scène.
+
+- Ajouter 1 au score du joueur ayant marqué !
+
+<details>
+	<summary>Solution</summary>
+	<p>S :</p>
+	<pre>
+		<code>
+			
